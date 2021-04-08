@@ -1,0 +1,32 @@
+#about {
+    color:white;
+    display: flex;
+    flex-direction: column;
+    height:92vh;
+    
+    
+    
+}
+
+#about >h1 {
+    color: gold;
+    margin: 15px auto;
+    justify-content: center;
+}
+
+#about >h4 {
+    margin:auto;
+    color: gold;
+}
+
+#about >p {
+    margin: auto;
+    width: 600px;
+}
+
+#about > img {
+
+    width: 200px;
+    margin: 100px auto 20px auto;
+
+}

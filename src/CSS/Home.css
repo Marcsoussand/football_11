@@ -1,0 +1,94 @@
+#homeContainer {
+    height: 84vh;
+    color: white;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+h1 {
+    padding-top:20px;
+    color: white;
+    text-align: center;
+}
+
+h3 {
+    text-align: center;
+    color: gold;
+    padding-bottom: 10px;
+}
+
+.Card {
+    
+    width: 310px;
+    border:gold 2px solid;
+    border-radius: 10px;
+    height: fit-content;
+
+}
+
+
+
+.Card >p {
+    padding:5px;
+}
+
+#crossFade {
+    position: relative;
+    height   : 200px;
+	width    : 300px;
+	margin   : 0 auto;
+}
+
+#crossFade img {
+    position:absolute;
+    left: 0;
+    width: 300px;
+}
+
+
+
+@-webkit-keyframes crossFadeInOut {
+	0% {
+		opacity : 1;
+		}
+	45% {
+		opacity : 1;
+		}
+	55% {
+		opacity : 0;
+		}
+	100% {
+		opacity : 0;
+		}
+	}
+
+    @keyframes crossFadeInOut {
+        0% {
+            opacity : 1;
+            }
+        45% {
+            opacity : 1;
+            }
+        55% {
+            opacity : 0;
+            }
+        100% {
+            opacity : 0;
+            }
+        }
+
+.top {
+    width: 100px;
+	
+     animation-name: crossFadeInOut;
+     animation-timing-function : linear;
+	 animation-iteration-count : infinite;
+	 animation-duration        : 3s; 
+	 animation-direction       : alternate;
+	-webkit-animation-name            : crossFadeInOut;
+	-webkit-animation-timing-function : linear;
+	-webkit-animation-iteration-count : infinite;
+	-webkit-animation-duration        : s; 
+	-webkit-animation-direction       : alternate;
+	}
