@@ -1,7 +1,6 @@
 import React from 'react';
 import './App.css';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import { connect } from 'react-redux';
 import SelectTeam from './components/SelectTeam';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -76,6 +75,7 @@ class App extends React.Component {
         'line3-3 player offmidfielder',
         'line1-1 player forward'], // Using a CSS grid, all players will go to their right place
       disabled: false,
+      page:'real',
       visibilityStatus: 'hidden',
       available: false,
       availableText: "Exclude injured and suspended players",
@@ -112,7 +112,7 @@ class App extends React.Component {
   }
 
   realTeams = () => {
-    this.setState({ visibilityStatus: 'hidden',playersName: ['Goal',
+    this.setState({ visibilityStatus: 'hidden',page:'real',playersName: ['Goal',
     'Def1', 'Def2', 'Def3', 'Def4',
     'Mid1', 'Mid2', 'Mid3',
     'Mid4', 'Mid5', 'For1'] });
@@ -120,7 +120,7 @@ class App extends React.Component {
 
   yourTeam = () => {
     this.setState({
-      visibilityStatus: 'hidden',benchName: []
+      visibilityStatus: 'hidden',benchName: [], page:'your'
     })
   }
 
