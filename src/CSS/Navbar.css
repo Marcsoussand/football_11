@@ -76,5 +76,12 @@ nav >div >a >div {
 
 .navItems >a {
     color:white;
+}
 
+#welcome {
+    font-size: 80%;
+    color: gold;
+    font-family:'Prompt', sans-serif;
+    background-color: #4F628E;
+    border-radius: 5px;
 }

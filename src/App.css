@@ -7,7 +7,6 @@
 }
 
 body {
-  /* background-color: #7887AB; */
   background-image: linear-gradient(to bottom, #7887ab, #5f6e95, #47567f, #2f3f6a, #162955);
   
   
@@ -142,9 +141,8 @@ font-size: 80%;
 
 #saveButton:hover {
   background-color: #006106;
-  
-  
 }
+
 
 .teamColor {
   color:red;

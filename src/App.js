@@ -14,6 +14,7 @@ import logo from './Images/logo.PNG';
 import dilogo from './Images/dilogo.jpg';
 import Modal from './components/Modal';
 import Home from './components/Home';
+import Homebis from './components/Homebis';
 
 // import UseToken from './components/UseToken';
 // import ErrorBoundary from './components/ErrorBoundary';
@@ -53,10 +54,10 @@ class App extends React.Component {
     super(props);
     this.setPlayerNames = this.setPlayerNames.bind(this);
     this.state = {
-      backgroundColor: 'red', //Jersey color
+      jerseyColor: 'red', //Jersey color
       team: '', //Team on screen
-      idteam: '',
-      badge: logo,
+      idteam: '', //idof the team
+      badge: logo, //logo of the team
       data: {}, //Fantasy Premier League API data fetched
       playersName: ['Goal',
         'Def1', 'Def2', 'Def3', 'Def4',
@@ -74,14 +75,15 @@ class App extends React.Component {
         'line3-2 player offmidfielder',
         'line3-3 player offmidfielder',
         'line1-1 player forward'], // Using a CSS grid, all players will go to their right place
-      disabled: false,
-      page:'real',
-      visibilityStatus: 'hidden',
-      available: false,
-      availableText: "Exclude injured and suspended players",
-      modalClasses: "overlay",
-      token: false,
-      buttonColor:'#24AB33',
+      disabled: false, //Used in case of late fetch
+      page:'real', //Used as condition for launching functions
+      visibilityStatus: 'hidden', //Used to display or not components
+      available: false, //Use for a button with two purposes
+      buttonColor:'#24AB33', //color of this button
+      availableText: "Exclude injured and suspended players", //Text of this button
+      modalClasses: "overlay", // Pop Up for teams with less forwards available than requested on field
+      token: false, //token with username and password
+      
 
 
 
@@ -92,6 +94,7 @@ class App extends React.Component {
     }
   }
 
+  // Fetching all the players data from official FPL API
   componentDidMount() {
     fetch('https://fantasy.premierleague.com/api/bootstrap-static/', {
       method: "GET",
@@ -104,13 +107,12 @@ class App extends React.Component {
 
 
   }
-
+// To update the token
   setToken = async (userToken) => {
-    console.log(userToken);
     await this.setState({ token: JSON.stringify(userToken) });
-    console.log(this.state.token);
   }
 
+  // Reinitiate the real Teams page onClick
   realTeams = () => {
     this.setState({ visibilityStatus: 'hidden',page:'real',playersName: ['Goal',
     'Def1', 'Def2', 'Def3', 'Def4',
@@ -118,9 +120,10 @@ class App extends React.Component {
     'Mid4', 'Mid5', 'For1'] });
   }
 
+  // Initiate parameters for your Team page onClick
   yourTeam = () => {
     this.setState({
-      visibilityStatus: 'hidden',benchName: [], page:'your'
+      visibilityStatus: 'hidden',benchName: [], page:'your',jerseyColor:'blue'
     })
   }
 
@@ -318,9 +321,8 @@ class App extends React.Component {
 
   setTeam = async (e) => {
     const teamPicked = [...listTeams].find(t => t.teamName === e.target.value);
-    console.log('teamPicked', teamPicked);
     try {
-      await this.setState({ team: teamPicked.teamName, backgroundColor: teamPicked.color, idteam: teamPicked.id, badge: teamPicked.logo });
+      await this.setState({ team: teamPicked.teamName, jerseyColor: teamPicked.color, idteam: teamPicked.id, badge: teamPicked.logo });
     }
     catch (err) { console.log("Sorry for the inconvenience") }
 
@@ -346,7 +348,7 @@ class App extends React.Component {
     midfielderList.sort(function (a, b) { return parseFloat(b.now_cost) - parseFloat(a.now_cost) });
     const forwardList = playersTeam.filter(t => t.element_type === 4);
     forwardList.sort(function (a, b) { return parseFloat(b.now_cost) - parseFloat(a.now_cost) });
-    console.log("players", playersTeam);
+    // console.log("players", playersTeam);
 
 
 
@@ -483,13 +485,14 @@ class App extends React.Component {
 
   render() {
     // console.log('this.state', this.state);
-    const { displayFormation, backgroundColor, playersName, benchName, team, badge, token, visibilityStatus, buttonColor,availableText, modalClasses } = this.state;
+    const { displayFormation, jerseyColor, playersName, benchName, team, badge, token, visibilityStatus, buttonColor,availableText, modalClasses } = this.state;
 
     // <UseToken/>
     if (!token) {
       return <>
         <Navbar realTeams={this.realTeams} yourTeam={this.yourTeam} about={this.about} login={this.login}  token={token} />
         <Login setToken={this.setToken}/>
+        <Home token={token}/>
         <Footer />
       </>
     }
@@ -501,6 +504,7 @@ class App extends React.Component {
             <Route exact path="/" >
             <Navbar realTeams={this.realTeams} yourTeam={this.yourTeam} about={this.about} login={this.login}  token={token}/>
             <Home token={token}/>
+            <Homebis/>
             <Footer />
             </Route>
             <Route path="/realTeams">
@@ -513,22 +517,22 @@ class App extends React.Component {
                   <SelectTeam listTeams={listTeams} setTeam={this.setTeam} disabled={this.state.data.elements ? false : true} />
                   <br />
                   <SelectDisplay formation={formation} changeDisplay={this.changeDisplay} />
-                  <button type="button" id='available' style={{ visibility: visibilityStatus, backgroundColor:buttonColor }} onClick={this.availablePlayers}>{availableText}</button>
+                  <button type="button" id='available' style={{ visibility: visibilityStatus, backGroundColor:buttonColor }} onClick={this.availablePlayers}>{availableText}</button>
                   <PlayersOnField visibilityStatus={visibilityStatus} playersName={playersName} team={team} />
                 </div>
                 <div id='field'>
 
-                  <div id='goal' className='player'><i id='player goalKeeper' style={{ color: backgroundColor }} className="fas fa-tshirt fa-3x"></i><p className='playerDisplay' id='goalName'>{playersName[0][0]}</p></div>
-                  <div className={displayFormation[0]}><i id='player2' style={{ color: backgroundColor }} className="fas fa-tshirt fa-3x"></i><p className='playerDisplay' id='def1Name'>{playersName[1][0]}</p></div>
-                  <div className={displayFormation[1]}><i id='player3' style={{ color: backgroundColor }} className="fas fa-tshirt fa-3x"></i><p className='playerDisplay' id='def2Name'>{playersName[2][0]}</p></div>
-                  <div className={displayFormation[2]}><i id='player4' style={{ color: backgroundColor }} className="fas fa-tshirt fa-3x"></i><p className='playerDisplay' id='def3Name'>{playersName[3][0]}</p></div>
-                  <div className={displayFormation[3]}><i id='player5' style={{ color: backgroundColor }} className="fas fa-tshirt fa-3x"></i><p className='playerDisplay' id='def4Name'>{playersName[4][0]}</p></div>
-                  <div className={displayFormation[4]}><i id='player6' style={{ color: backgroundColor }} className="fas fa-tshirt fa-3x"></i><p className='playerDisplay' id='mid1Name'>{playersName[5][0]}</p></div>
-                  <div className={displayFormation[5]}><i id='player7' style={{ color: backgroundColor }} className="fas fa-tshirt fa-3x"></i><p className='playerDisplay' id='mid2Name'>{playersName[6][0]}</p></div>
-                  <div className={displayFormation[6]}><i id='player8' style={{ color: backgroundColor }} className="fas fa-tshirt fa-3x"></i><p className='playerDisplay' id='mid3Name'>{playersName[7][0]}</p></div>
-                  <div className={displayFormation[7]}><i id='player9' style={{ color: backgroundColor }} className="fas fa-tshirt fa-3x"></i><p className='playerDisplay' id='for1Name'>{playersName[8][0]}</p></div>
-                  <div className={displayFormation[8]}><i id='player10' style={{ color: backgroundColor }} className="fas fa-tshirt fa-3x"></i><p className='playerDisplay' id='for2Name'>{playersName[9][0]}</p></div>
-                  <div className={displayFormation[9]}><i id='player11' style={{ color: backgroundColor }} className="fas fa-tshirt fa-3x"></i><p className='playerDisplay' id='for3Name'>{playersName[10][0]}</p></div>
+                  <div id='goal' className='player'><i id='player goalKeeper' style={{ color: jerseyColor }} className="fas fa-tshirt fa-3x"></i><p className='playerDisplay' id='goalName'>{playersName[0][0]}</p></div>
+                  <div className={displayFormation[0]}><i id='player2' style={{ color: jerseyColor }} className="fas fa-tshirt fa-3x"></i><p className='playerDisplay' id='def1Name'>{playersName[1][0]}</p></div>
+                  <div className={displayFormation[1]}><i id='player3' style={{ color: jerseyColor }} className="fas fa-tshirt fa-3x"></i><p className='playerDisplay' id='def2Name'>{playersName[2][0]}</p></div>
+                  <div className={displayFormation[2]}><i id='player4' style={{ color: jerseyColor }} className="fas fa-tshirt fa-3x"></i><p className='playerDisplay' id='def3Name'>{playersName[3][0]}</p></div>
+                  <div className={displayFormation[3]}><i id='player5' style={{ color: jerseyColor }} className="fas fa-tshirt fa-3x"></i><p className='playerDisplay' id='def4Name'>{playersName[4][0]}</p></div>
+                  <div className={displayFormation[4]}><i id='player6' style={{ color: jerseyColor }} className="fas fa-tshirt fa-3x"></i><p className='playerDisplay' id='mid1Name'>{playersName[5][0]}</p></div>
+                  <div className={displayFormation[5]}><i id='player7' style={{ color: jerseyColor }} className="fas fa-tshirt fa-3x"></i><p className='playerDisplay' id='mid2Name'>{playersName[6][0]}</p></div>
+                  <div className={displayFormation[6]}><i id='player8' style={{ color: jerseyColor }} className="fas fa-tshirt fa-3x"></i><p className='playerDisplay' id='mid3Name'>{playersName[7][0]}</p></div>
+                  <div className={displayFormation[7]}><i id='player9' style={{ color: jerseyColor }} className="fas fa-tshirt fa-3x"></i><p className='playerDisplay' id='for1Name'>{playersName[8][0]}</p></div>
+                  <div className={displayFormation[8]}><i id='player10' style={{ color: jerseyColor }} className="fas fa-tshirt fa-3x"></i><p className='playerDisplay' id='for2Name'>{playersName[9][0]}</p></div>
+                  <div className={displayFormation[9]}><i id='player11' style={{ color: jerseyColor }} className="fas fa-tshirt fa-3x"></i><p className='playerDisplay' id='for3Name'>{playersName[10][0]}</p></div>
                   <img id='badgeDisplay' src={badge} alt='badge'></img>
                 </div>
                 <div id='rightSide'>
@@ -551,17 +555,17 @@ class App extends React.Component {
                 </div>
                 <div id='field'>
 
-                  <div id='goal' className='player'><i style={{ color: backgroundColor }} className="fas fa-tshirt fa-3x"></i><p className='playerDisplay' id='goalName'>{playersName[0]}</p></div>
-                  <div className={displayFormation[0]}><i style={{ color: backgroundColor }} className="fas fa-tshirt fa-3x"></i><p className='playerDisplay' id='def1Name'>{playersName[1]}</p></div>
-                  <div className={displayFormation[1]}><i style={{ color: backgroundColor }} className="fas fa-tshirt fa-3x"></i><p className='playerDisplay' id='def2Name'>{playersName[2]}</p></div>
-                  <div className={displayFormation[2]}><i style={{ color: backgroundColor }} className="fas fa-tshirt fa-3x"></i><p className='playerDisplay' id='def3Name'>{playersName[3]}</p></div>
-                  <div className={displayFormation[3]}><i style={{ color: backgroundColor }} className="fas fa-tshirt fa-3x"></i><p className='playerDisplay' id='def4Name'>{playersName[4]}</p></div>
-                  <div className={displayFormation[4]}><i style={{ color: backgroundColor }} className="fas fa-tshirt fa-3x"></i><p className='playerDisplay' id='mid1Name'>{playersName[5]}</p></div>
-                  <div className={displayFormation[5]}><i style={{ color: backgroundColor }} className="fas fa-tshirt fa-3x"></i><p className='playerDisplay' id='mid2Name'>{playersName[6]}</p></div>
-                  <div className={displayFormation[6]}><i style={{ color: backgroundColor }} className="fas fa-tshirt fa-3x"></i><p className='playerDisplay' id='mid3Name'>{playersName[7]}</p></div>
-                  <div className={displayFormation[7]}><i style={{ color: backgroundColor }} className="fas fa-tshirt fa-3x"></i><p className='playerDisplay' id='for1Name'>{playersName[8]}</p></div>
-                  <div className={displayFormation[8]}><i style={{ color: backgroundColor }} className="fas fa-tshirt fa-3x"></i><p className='playerDisplay' id='for2Name'>{playersName[9]}</p></div>
-                  <div className={displayFormation[9]}><i style={{ color: backgroundColor }} className="fas fa-tshirt fa-3x"></i><p className='playerDisplay' id='for3Name'>{playersName[10]}</p></div>
+                  <div id='goal' className='player'><i style={{ color: jerseyColor }} className="fas fa-tshirt fa-3x"></i><p className='playerDisplay' id='goalName'>{playersName[0]}</p></div>
+                  <div className={displayFormation[0]}><i style={{ color: jerseyColor }} className="fas fa-tshirt fa-3x"></i><p className='playerDisplay' id='def1Name'>{playersName[1]}</p></div>
+                  <div className={displayFormation[1]}><i style={{ color: jerseyColor }} className="fas fa-tshirt fa-3x"></i><p className='playerDisplay' id='def2Name'>{playersName[2]}</p></div>
+                  <div className={displayFormation[2]}><i style={{ color: jerseyColor }} className="fas fa-tshirt fa-3x"></i><p className='playerDisplay' id='def3Name'>{playersName[3]}</p></div>
+                  <div className={displayFormation[3]}><i style={{ color: jerseyColor }} className="fas fa-tshirt fa-3x"></i><p className='playerDisplay' id='def4Name'>{playersName[4]}</p></div>
+                  <div className={displayFormation[4]}><i style={{ color: jerseyColor }} className="fas fa-tshirt fa-3x"></i><p className='playerDisplay' id='mid1Name'>{playersName[5]}</p></div>
+                  <div className={displayFormation[5]}><i style={{ color: jerseyColor }} className="fas fa-tshirt fa-3x"></i><p className='playerDisplay' id='mid2Name'>{playersName[6]}</p></div>
+                  <div className={displayFormation[6]}><i style={{ color: jerseyColor }} className="fas fa-tshirt fa-3x"></i><p className='playerDisplay' id='mid3Name'>{playersName[7]}</p></div>
+                  <div className={displayFormation[7]}><i style={{ color: jerseyColor }} className="fas fa-tshirt fa-3x"></i><p className='playerDisplay' id='for1Name'>{playersName[8]}</p></div>
+                  <div className={displayFormation[8]}><i style={{ color: jerseyColor }} className="fas fa-tshirt fa-3x"></i><p className='playerDisplay' id='for2Name'>{playersName[9]}</p></div>
+                  <div className={displayFormation[9]}><i style={{ color: jerseyColor }} className="fas fa-tshirt fa-3x"></i><p className='playerDisplay' id='for3Name'>{playersName[10]}</p></div>
                   <img id='badgeDisplay' src={badge} alt='badge'></img>
                 </div>
                 <div id='rightSide'>

@@ -3,11 +3,12 @@ import '../CSS/Navbar.css';
 import logo from '../Images/logo.PNG';
 import { NavLink } from 'react-router-dom';
 
-
+// Navbar to navigate with NavLinks
+// After token, name of the user appears on the right
 const Navbar = (props) => {
  const {realTeams, yourTeam,about,login,token} =props;
 
-// if(!token) {
+if(!token) {
 return (
     <nav>
         <div id='title'><NavLink to='/'><img src={logo} alt='Logo'></img><div><p id='titleUp'>Football 11</p><p id='titleDown'>Lineup builder</p></div></NavLink></div>
@@ -19,6 +20,16 @@ return (
         </div>
     </nav>
 )}
+return (
+<nav>
+        <div id='title'><NavLink to='/'><img src={logo} alt='Logo'></img><div><p id='titleUp'>Football 11</p><p id='titleDown'>Lineup builder</p></div></NavLink></div>
+        <div id='items'>
+        <span className='navItems' onClick={realTeams} ><NavLink to ='/realTeams'>Real Teams</NavLink></span>
+        <span className='navItems' onClick={yourTeam}><NavLink to='/yourTeam'>Your Team</NavLink> </span>
+        <span className='navItems' onClick={about}><NavLink to='/about'>About</NavLink></span>
+        <span className='navItems' id='welcome'>Hi {JSON.parse(token).username}</span>
+        </div>
+    </nav>)}
 // return(
 //     <nav>
 //     <div id='title'> <img src={logo} alt='Logo'></img><div><p style={{color:'gold'}}>Football 11</p><p style={{fontSize:"60%", textAlign:'center'}}>Lineup builder</p></div></div>
@@ -26,7 +37,7 @@ return (
 //     <span className='navItems' onClick={realTeams} ><NavLink to ='/realTeams'>Real Teams</NavLink></span>
 //     <span className='navItems' onClick={yourTeam}><NavLink to='/yourTeam'>Your Team</NavLink> </span>
 //     <span className='navItems' onClick={about}><NavLink to='/about'>About</NavLink></span>
-//     <span className='navItems'>Welcome {token.username}</span>
+//     <span className='navItems'>Welcome {JSON.parse(token).username}</span>
 //     </div>
 // </nav>
 

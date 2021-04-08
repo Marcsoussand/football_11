@@ -1,0 +1,17 @@
+#check {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin-bottom: 80px;
+}
+
+#check ul li {
+    color:white;
+    list-style-type: none;
+    padding-bottom:10px;
+}
+
+#check ul li i {
+    color:#24AB33;
+    padding-right: 5px;
+}

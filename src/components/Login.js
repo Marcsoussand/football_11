@@ -1,22 +1,11 @@
 import '../CSS/Login.css';
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-// import { NavLink } from 'react-router-dom';
+import { Route } from 'react-router-dom'
 
 //Login page, used to deal with a token username/password in order to connect to the site.
+// Used for the landing page
 
-// async function loginUser(credentials) {
-//     return fetch('http://localhost:8081/login', {
-//       method: 'POST',
-//       headers: {
-//         'Content-Type': 'application/json'
-//       },
-//       body: JSON.stringify(credentials)
-//     })
-//       .then(data => data.json())
-//    }
-   
-     
 
 export default function Login({ setToken }) {
     const [username, setUserName] = useState();
@@ -24,12 +13,10 @@ export default function Login({ setToken }) {
    
      const handleSubmit = async e => {
        e.preventDefault();
-    //    const token = await loginUser({
         const token =({
          username,
          password
        });
-       console.log(token);
        localStorage.setItem('token', JSON.stringify(token));
        setToken(token);
      }
@@ -38,7 +25,7 @@ export default function Login({ setToken }) {
     return (
         <>
         <div id='loginContainer'>
-        <h2>Welcome, please enter your login</h2>
+        <h2>Please enter your login</h2>
         <form id='loginForm' onSubmit={handleSubmit}>
       <label>
         <p>Username</p>
@@ -50,7 +37,8 @@ export default function Login({ setToken }) {
       </label>
       <div>
       {/* <NavLink to='/realTeams'><button type="submit" className='loginButton'>Submit</button></NavLink> */}
-      <button type="submit" className='loginButton'>Submit</button>
+      {/* <button type="submit" className='loginButton'>Submit</button> */}
+      <Route render={({history}) => (<button type="submit" className='loginButton' onClick={() => { history.push('/') }}>Submit</button> )} />
       </div>
     </form>
     </div>

@@ -5,6 +5,10 @@ import yourTeam from '../Images/yourTeam.PNG';
 import yourTeam2 from '../Images/yourTeam2.PNG';
 import { NavLink } from 'react-router-dom';
 
+// Home page used for route /, redirecting to two main pages
+// Welcome "Username" from token
+//CrossFade CSS animation on pictures 
+
 
 const Home = (props) => {
     const {token} =props;

@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-var playersTemp2 = [];
+import React from 'react';
 
 class YourTeam extends React.Component {
     constructor(props) {
