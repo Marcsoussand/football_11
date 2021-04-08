@@ -24,19 +24,17 @@ nav >div >a >div {
     display: grid;   
 }
 
-nav >div >a:link {
+/* nav >div >a:link {
     text-decoration: none;
-}
+} */
 
 #titleUp {
     color: gold;
-    text-decoration: none;
     padding-left: 5px;
 }
 
 #titleDown {
     color:white;
-    text-decoration: none;
     font-size: 60%;
     text-align: center;
 }
@@ -78,6 +76,5 @@ nav >div >a:link {
 
 .navItems >a {
     color:white;
-    text-decoration: none;
 
 }

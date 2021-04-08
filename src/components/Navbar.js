@@ -2,7 +2,7 @@ import React from 'react';
 import '../CSS/Navbar.css';
 import logo from '../Images/logo.PNG';
 import { NavLink } from 'react-router-dom';
-// import SelectTeam from './SelectTeam';
+
 
 const Navbar = (props) => {
  const {realTeams, yourTeam,about,login,token} =props;

@@ -35,7 +35,7 @@ class YourTeam extends React.Component {
                     <h3 style={{ textAlign: "center", color: "gold" }} >Players </h3>
                     {playersName.map((item, i) => {
                         playersTemp2.push(item);
-                        return <li key={i} className='playerListDesign'><div>Player {i + 1}</div><input type="text" className='inputPlayers' defaultValue={item} onChange={event => { playersTemp2[i] = event.target.value; this.setPlayer(playersTemp2); console.log(playersTemp2); }} /> </li>
+                        return <li key={i} className='playerListDesign'><div>Player {i + 1}</div><input type="text" className='inputPlayers'  onChange={event => { playersTemp2[i] = event.target.value; this.setPlayer(playersTemp2); console.log(playersTemp2); }} /> </li>
                     })}
                 </ul>
             </>
