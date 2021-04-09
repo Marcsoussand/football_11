@@ -76,15 +76,15 @@ class App extends React.Component {
         'line3-3 player offmidfielder',
         'line1-1 player forward'], // Using a CSS grid, all players will go to their right place
       disabled: false, //Used in case of late fetch
-      page:'real', //Used as condition for launching functions
+      page: 'real', //Used as condition for launching functions
       visibilityStatus: 'hidden', //Used to display or not components
       available: false, //Use for a button with two purposes
-      buttonColor:'#24AB33', //color of this button
+      buttonColor: '#24AB33', //color of this button
       availableText: "Exclude injured and suspended players", //Text of this button
       modalClasses: "overlay", // Pop Up for teams with less forwards available than requested on field
       token: false, //token with username and password
-      noCors:false,
-      noCorsText: "I have CORS Unblock or similar",
+      corsModule: "overlay show",
+
 
 
 
@@ -95,60 +95,52 @@ class App extends React.Component {
     }
   }
 
-  noCorsUpdate = () => {
-    if(!this.state.noCors){
-    this.setState({noCors:true,noCorsText:"I do not have CORS Unblock or similar"})}
-    else {
-      this.setState({noCors:false,noCorsText:'I have CORS Unblock or similar'})
-    }
-  }
+
 
   // Fetching all the players data from official FPL API
   componentDidMount() {
-    if(!this.state.noCors){
-      console.log("coucou");
-      fetch('https://cors-anywhere.herokuapp.com/https://fantasy.premierleague.com/api/bootstrap-static/', {
-        method: "GET",
-      })
-        .then(response => response.json())
-        .then(playerData => {
-          this.setState({ data: playerData })
-        })}
-else {
-  console.log("coucou2");
-    fetch('https://fantasy.premierleague.com/api/bootstrap-static/', {
+    fetch('https://cors-anywhere.herokuapp.com/https://fantasy.premierleague.com/api/bootstrap-static/', {
       method: "GET",
     })
       .then(response => response.json())
       .then(playerData => {
         this.setState({ data: playerData })
       })
-
-    }
-
   }
-// To update the token
+  // fetch('https://fantasy.premierleague.com/api/bootstrap-static/', {
+  //   method: "GET",
+  // })
+  //   .then(response => response.json())
+  //   .then(playerData => {
+  //     this.setState({ data: playerData })
+  //   })}}
+
+
+
+  // To update the token
   setToken = async (userToken) => {
     await this.setState({ token: JSON.stringify(userToken) });
   }
 
   // Reinitiate the real Teams page onClick
   realTeams = () => {
-    this.setState({ visibilityStatus: 'hidden',page:'real',playersName: ['Goal',
-    'Def1', 'Def2', 'Def3', 'Def4',
-    'Mid1', 'Mid2', 'Mid3',
-    'Mid4', 'Mid5', 'For1'] });
+    this.setState({
+      visibilityStatus: 'hidden', page: 'real', playersName: ['Goal',
+        'Def1', 'Def2', 'Def3', 'Def4',
+        'Mid1', 'Mid2', 'Mid3',
+        'Mid4', 'Mid5', 'For1']
+    });
   }
 
   // Initiate parameters for your Team page onClick
   yourTeam = () => {
     this.setState({
-      visibilityStatus: 'hidden',benchName: [], page:'your',jerseyColor:'blue'
+      visibilityStatus: 'hidden', benchName: [], page: 'your', jerseyColor: 'blue'
     })
   }
 
   // about = () => {
-    
+
   // }
 
   // login = () => {
@@ -157,49 +149,51 @@ else {
   // }
 
   showPlayers = (data) => {
-    var YourTempPlayers =[]
-    data.map(t=>YourTempPlayers.push(t.player_name))
-    this.setState({playersName:YourTempPlayers,badge:dilogo})
+    var YourTempPlayers = []
+    data.map(t => YourTempPlayers.push(t.player_name))
+    this.setState({ playersName: YourTempPlayers, badge: dilogo })
   }
 
   setPlayerNames = (arr) => {
-     this.setState({playersName:arr});
+    this.setState({ playersName: arr });
   }
 
-  updateTeam = () =>{
+  updateTeam = () => {
     let teamIdPlayer = 1;
-    let playersNameTemp=this.state.playersName;
+    let playersNameTemp = this.state.playersName;
     let playerPost = {};
-    let playerName='';
-    for (let playerId=1;playerId<=playersNameTemp.length;playerId++)
-    {playerName = playersNameTemp[playerId-1];
-      playerPost={playerId,playerName,teamIdPlayer};
+    let playerName = '';
+    for (let playerId = 1; playerId <= playersNameTemp.length; playerId++) {
+      playerName = playersNameTemp[playerId - 1];
+      playerPost = { playerId, playerName, teamIdPlayer };
       fetch('http://localhost:8081/post', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        
-      },
-      body: JSON.stringify(playerPost)
-      // .then(res => res.json())
-      // .then(data => {
-      //   console.log(data);
-      // })
-      // .catch(err => {
-      //   console.log(err);
-      // })
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
 
-  })}};
+        },
+        body: JSON.stringify(playerPost)
+        // .then(res => res.json())
+        // .then(data => {
+        //   console.log(data);
+        // })
+        // .catch(err => {
+        //   console.log(err);
+        // })
+
+      })
+    }
+  };
 
   availablePlayers = async () => {
     switch (this.state.available) {
       case false:
-        await this.setState({ available: true, availableText: "Include injured and suspended players", buttonColor:"red" })
+        await this.setState({ available: true, availableText: "Include injured and suspended players", buttonColor: "red" })
         this.getPlayers();
 
         break;
       case true:
-        await this.setState({ available: false, availableText: "Exclude injured and suspended players",buttonColor:"#24AB33" })
+        await this.setState({ available: false, availableText: "Exclude injured and suspended players", buttonColor: "#24AB33" })
         this.getPlayers();
 
         break;
@@ -351,7 +345,7 @@ else {
   }
 
   closeModal = () => {
-    this.setState({ modalClasses: "overlay" })
+    this.setState({ modalClasses: "overlay",corsModule: 'overlay' })
   }
 
 
@@ -505,18 +499,25 @@ else {
 
   render() {
 
-    const { displayFormation, jerseyColor, playersName, benchName, team, badge, token, visibilityStatus, buttonColor,availableText, modalClasses,noCorsText } = this.state;
+    const { displayFormation, jerseyColor, playersName, benchName, team, badge, token, visibilityStatus, buttonColor, availableText, modalClasses, corsModule } = this.state;
 
     // <UseToken/>
     if (!token) {
       return <>
-        <Navbar realTeams={this.realTeams} yourTeam={this.yourTeam} about={this.about} login={this.login}  token={token} />
-        <div id='noCors'>In order to get data from FPL, we suggest you to use <a href='https://chrome.google.com/webstore/detail/cors-unblock/lfhmikememgdcahcdlaciloancbhjino'>CORS Unblock extension</a><br/>
-        Or you will have to ask for temporary access <a href="https://cors-anywhere.herokuapp.com/corsdemo">Here</a><br/>
-                  <button type='button' onClick={this.noCorsUpdate}>{noCorsText}</button></div>
-        <Login setToken={this.setToken}/>
-        
-        <Home token={token}/>
+        <Navbar realTeams={this.realTeams} yourTeam={this.yourTeam} about={this.about} login={this.login} token={token} />
+        <div id='noCors' className={corsModule}>
+          <div className="popup">
+            <div className="close" onClick={this.closeModal}>×</div>
+            <div className="content-1">In order to get data from FPL without installing extension,<br/>
+             you will have to ask for temporary access by visiting this website :<br/>
+             <a id='corsLink'href="https://cors-anywhere.herokuapp.com/corsdemo">NO CORS</a> <br/>
+             and refresh the page, sorry for the inconvenience
+          </div>
+          </div>
+        </div>
+        <Login setToken={this.setToken} />
+
+        <Home token={token} />
         <Footer />
       </>
     }
@@ -526,13 +527,13 @@ else {
         <BrowserRouter>
           <Switch>
             <Route exact path="/" >
-            <Navbar realTeams={this.realTeams} yourTeam={this.yourTeam} about={this.about} login={this.login}  token={token}/>
-            <Home token={token}/>
-            <Homebis/>
-            <Footer />
+              <Navbar realTeams={this.realTeams} yourTeam={this.yourTeam} about={this.about} login={this.login} token={token} />
+              <Home token={token} />
+              <Homebis />
+              <Footer />
             </Route>
             <Route path="/realTeams">
-              <Navbar realTeams={this.realTeams} yourTeam={this.yourTeam} about={this.about} login={this.login}  token={token}/>
+              <Navbar realTeams={this.realTeams} yourTeam={this.yourTeam} about={this.about} login={this.login} token={token} />
 
 
               <div id='container'>
@@ -541,7 +542,7 @@ else {
                   <SelectTeam listTeams={listTeams} setTeam={this.setTeam} disabled={this.state.data.elements ? false : true} />
                   <br />
                   <SelectDisplay formation={formation} changeDisplay={this.changeDisplay} />
-                  <button type="button" id='available' style={{ visibility: visibilityStatus, backGroundColor:buttonColor }} onClick={this.availablePlayers}>{availableText}</button>
+                  <button type="button" id='available' style={{ visibility: visibilityStatus, backGroundColor: buttonColor }} onClick={this.availablePlayers}>{availableText}</button>
                   <PlayersOnField visibilityStatus={visibilityStatus} playersName={playersName} team={team} />
                 </div>
                 <div id='field'>
@@ -560,7 +561,7 @@ else {
                   <img id='badgeDisplay' src={badge} alt='badge'></img>
                 </div>
                 <div id='rightSide'>
-                  
+                  <div id='noCorsTeam'>In order to get data from FPL, you will have to ask for temporary access <a href="https://cors-anywhere.herokuapp.com/corsdemo">Here</a></div>
                   <PlayersOnBench visibilityStatus={visibilityStatus} id='playersOnBench1' benchName={benchName} />
                   {/* <button id='saveButton'>Save your team</button> */}
                 </div>
@@ -569,13 +570,13 @@ else {
             </Route>
             <Route path="/yourTeam">
 
-              <Navbar realTeams={this.realTeams} yourTeam={this.yourTeam} about={this.about} login={this.login}  token={token}/>
+              <Navbar realTeams={this.realTeams} yourTeam={this.yourTeam} about={this.about} login={this.login} token={token} />
 
 
               <div id='container'>
                 <div id='leftSide'>
                   <SelectDisplay formation={formation} changeDisplay={this.changeDisplay} />
-                  <YourTeam visibilityStatus={visibilityStatus} playersName={playersName} team={team} setPlayerNames={this.setPlayerNames} showPlayers={this.showPlayers}/>
+                  <YourTeam visibilityStatus={visibilityStatus} playersName={playersName} team={team} setPlayerNames={this.setPlayerNames} showPlayers={this.showPlayers} />
                 </div>
                 <div id='field'>
 
@@ -601,7 +602,7 @@ else {
               <Footer />
             </Route>
             <Route path="/about">
-              <Navbar realTeams={this.realTeams} yourTeam={this.yourTeam} about={this.about} login={this.login}  token={token}/>
+              <Navbar realTeams={this.realTeams} yourTeam={this.yourTeam} about={this.about} login={this.login} token={token} />
               <About />
 
               <Footer />
