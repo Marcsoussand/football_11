@@ -83,7 +83,8 @@ class App extends React.Component {
       availableText: "Exclude injured and suspended players", //Text of this button
       modalClasses: "overlay", // Pop Up for teams with less forwards available than requested on field
       token: false, //token with username and password
-      
+      noCors:false,
+      noCorsText: "I have CORS Unblock or similar",
 
 
 
@@ -94,8 +95,27 @@ class App extends React.Component {
     }
   }
 
+  noCorsUpdate = () => {
+    if(!this.state.noCors){
+    this.setState({noCors:true,noCorsText:"I do not have CORS Unblock or similar"})}
+    else {
+      this.setState({noCors:false,noCorsText:'I have CORS Unblock or similar'})
+    }
+  }
+
   // Fetching all the players data from official FPL API
   componentDidMount() {
+    if(!this.state.noCors){
+      console.log("coucou");
+      fetch('https://cors-anywhere.herokuapp.com/https://fantasy.premierleague.com/api/bootstrap-static/', {
+        method: "GET",
+      })
+        .then(response => response.json())
+        .then(playerData => {
+          this.setState({ data: playerData })
+        })}
+else {
+  console.log("coucou2");
     fetch('https://fantasy.premierleague.com/api/bootstrap-static/', {
       method: "GET",
     })
@@ -104,7 +124,7 @@ class App extends React.Component {
         this.setState({ data: playerData })
       })
 
-
+    }
 
   }
 // To update the token
@@ -484,14 +504,18 @@ class App extends React.Component {
 
 
   render() {
-    // console.log('this.state', this.state);
-    const { displayFormation, jerseyColor, playersName, benchName, team, badge, token, visibilityStatus, buttonColor,availableText, modalClasses } = this.state;
+
+    const { displayFormation, jerseyColor, playersName, benchName, team, badge, token, visibilityStatus, buttonColor,availableText, modalClasses,noCorsText } = this.state;
 
     // <UseToken/>
     if (!token) {
       return <>
         <Navbar realTeams={this.realTeams} yourTeam={this.yourTeam} about={this.about} login={this.login}  token={token} />
+        <div id='noCors'>In order to get data from FPL, we suggest you to use <a href='https://chrome.google.com/webstore/detail/cors-unblock/lfhmikememgdcahcdlaciloancbhjino'>CORS Unblock extension</a><br/>
+        Or you will have to ask for temporary access <a href="https://cors-anywhere.herokuapp.com/corsdemo">Here</a><br/>
+                  <button type='button' onClick={this.noCorsUpdate}>{noCorsText}</button></div>
         <Login setToken={this.setToken}/>
+        
         <Home token={token}/>
         <Footer />
       </>
@@ -536,7 +560,7 @@ class App extends React.Component {
                   <img id='badgeDisplay' src={badge} alt='badge'></img>
                 </div>
                 <div id='rightSide'>
-
+                  
                   <PlayersOnBench visibilityStatus={visibilityStatus} id='playersOnBench1' benchName={benchName} />
                   {/* <button id='saveButton'>Save your team</button> */}
                 </div>
