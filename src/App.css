@@ -103,29 +103,20 @@ font-size: 80%;
 }
 
 #rightSide {
-  /* padding-top: 135px; */
+  padding-top: 135px;
   font-size: 150%;
   font-weight: bold;
   color: gold;
   
 }
 
-/* #noCors {
-  margin: 70px auto;
-	padding: 20px;
-	background: #ffffff;
-	border-radius: 5px;
-	width: 55%;
-	position: relative;
-	transition: all 3s ease-in-out;
-} */
 
-#noCorsTeam {
+/* #noCorsTeam {
   color:white;
   padding: 50px;
   text-align: center;
   font-size: 70%;
-}
+} */
 
 #bench {
   column-count: 2;

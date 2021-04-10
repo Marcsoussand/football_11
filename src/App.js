@@ -98,22 +98,12 @@ class App extends React.Component {
 
 
   // Fetching all the players data from official FPL API
-  componentDidMount() {
-    fetch('https://cors-anywhere.herokuapp.com/https://fantasy.premierleague.com/api/bootstrap-static/', {
-      method: "GET",
-    })
-      .then(response => response.json())
-      .then(playerData => {
-        this.setState({ data: playerData })
-      })
-  }
-  // fetch('https://fantasy.premierleague.com/api/bootstrap-static/', {
-  //   method: "GET",
-  // })
-  //   .then(response => response.json())
-  //   .then(playerData => {
-  //     this.setState({ data: playerData })
-  //   })}}
+   componentDidMount() {
+    
+  fetch('https://thingproxy.freeboard.io/fetch/https://fantasy.premierleague.com/api/bootstrap-static/')
+   .then(response => response.json())
+ .then(playerData => this.setState({ data: playerData }))
+   }
 
 
 
@@ -173,13 +163,6 @@ class App extends React.Component {
 
         },
         body: JSON.stringify(playerPost)
-        // .then(res => res.json())
-        // .then(data => {
-        //   console.log(data);
-        // })
-        // .catch(err => {
-        //   console.log(err);
-        // })
 
       })
     }
@@ -345,7 +328,7 @@ class App extends React.Component {
   }
 
   closeModal = () => {
-    this.setState({ modalClasses: "overlay",corsModule: 'overlay' })
+    this.setState({ modalClasses: "overlay", corsModule: 'overlay' })
   }
 
 
@@ -362,7 +345,6 @@ class App extends React.Component {
     midfielderList.sort(function (a, b) { return parseFloat(b.now_cost) - parseFloat(a.now_cost) });
     const forwardList = playersTeam.filter(t => t.element_type === 4);
     forwardList.sort(function (a, b) { return parseFloat(b.now_cost) - parseFloat(a.now_cost) });
-    // console.log("players", playersTeam);
 
 
 
@@ -505,17 +487,17 @@ class App extends React.Component {
     if (!token) {
       return <>
         <Navbar realTeams={this.realTeams} yourTeam={this.yourTeam} about={this.about} login={this.login} token={token} />
-        <div id='noCors' className={corsModule}>
+        {/* <div id='noCors' className={corsModule}>
           <div className="popup">
             <div className="close" onClick={this.closeModal}>×</div>
             <h2>Warning</h2>
-            <div className="content-1">In order to get data from FPL without installing extension,<br/>
-             you will have to ask for temporary access by visiting this website :<br/>
-             <a id='corsLink'href="https://cors-anywhere.herokuapp.com/corsdemo">NO CORS</a> <br/>
+            <div className="content-1">In order to get data from FPL without installing extension,<br />
+             you will have to ask for temporary access by visiting this website :<br />
+              <a id='corsLink' href="https://cors-anywhere.herokuapp.com/corsdemo">NO CORS</a> <br />
              and refresh the page, sorry for the inconvenience
           </div>
           </div>
-        </div>
+        </div> */}
         <Login setToken={this.setToken} />
 
         <Home token={token} />
@@ -543,7 +525,7 @@ class App extends React.Component {
                   <SelectTeam listTeams={listTeams} setTeam={this.setTeam} disabled={this.state.data.elements ? false : true} />
                   <br />
                   <SelectDisplay formation={formation} changeDisplay={this.changeDisplay} />
-                  <button type="button" id='available' style={{ visibility: visibilityStatus, backGroundColor: buttonColor }} onClick={this.availablePlayers}>{availableText}</button>
+                  <button type="button" id='available' style={{ visibility: visibilityStatus, backgroundColor: buttonColor }} onClick={this.availablePlayers}>{availableText}</button>
                   <PlayersOnField visibilityStatus={visibilityStatus} playersName={playersName} team={team} />
                 </div>
                 <div id='field'>
@@ -562,9 +544,8 @@ class App extends React.Component {
                   <img id='badgeDisplay' src={badge} alt='badge'></img>
                 </div>
                 <div id='rightSide'>
-                  <div id='noCorsTeam'>In order to get data from FPL, you will have to ask for temporary access <a href="https://cors-anywhere.herokuapp.com/corsdemo">Here</a></div>
+                  {/* <div id='noCorsTeam'>In order to get data from FPL, you will have to ask for temporary access <a href="https://cors-anywhere.herokuapp.com/corsdemo">Here</a></div> */}
                   <PlayersOnBench visibilityStatus={visibilityStatus} id='playersOnBench1' benchName={benchName} />
-                  {/* <button id='saveButton'>Save your team</button> */}
                 </div>
               </div>
               <Footer />

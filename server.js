@@ -16,6 +16,8 @@ const exp = require('express');
 const bp = require('body-parser');
 const knex = require('knex');
 const cors = require('cors')
+const fetch = require('node-fetch');
+
 
 const db = knex({
     client:'pg',
@@ -33,6 +35,27 @@ app.use(bp.urlencoded({extended:false}));
 app.use(bp.json());
 
 app.use('/',exp.static(__dirname+'/public'));
+
+// async function fetchEntry() {
+//   const api_url = 'https://fantasy.premierleague.com/api/bootstrap-static/';
+//   const fetchEntry_response = await fetch(api_url);
+//   const json = await fetchEntry_response.json();
+//   console.log("json: " + JSON.stringify(json));
+// };
+
+// fetchEntry();
+
+// app.get('/playerdata',(req,res) => {
+//   fetch('https://fantasy.premierleague.com/api/bootstrap-static/')
+//   .then(response => response.json())
+//   .then(data => {
+//     console.log(data)
+//   })
+//   .catch(err => {console.log(err);
+//   res.send({message:err.detail}) 
+//   res.json()
+// })
+// })
 
 app.get('/show', (req, res) => {
   db('players')
