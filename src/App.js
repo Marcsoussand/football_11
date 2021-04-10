@@ -83,14 +83,7 @@ class App extends React.Component {
       availableText: "Exclude injured and suspended players", //Text of this button
       modalClasses: "overlay", // Pop Up for teams with less forwards available than requested on field
       token: false, //token with username and password
-      corsModule: "overlay show",
-
-
-
-
-
-
-
+      // corsModule: "overlay show",
 
     }
   }
@@ -98,9 +91,9 @@ class App extends React.Component {
 
 
   // Fetching all the players data from official FPL API
-   componentDidMount() {
+  async componentDidMount() {
     
-  fetch('https://thingproxy.freeboard.io/fetch/https://fantasy.premierleague.com/api/bootstrap-static/')
+  await fetch('https://thingproxy.freeboard.io/fetch/https://fantasy.premierleague.com/api/bootstrap-static/')
    .then(response => response.json())
  .then(playerData => this.setState({ data: playerData }))
    }
