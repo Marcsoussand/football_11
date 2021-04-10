@@ -10,7 +10,7 @@
 
 #about >h1 {
     color: gold;
-    margin: 15px auto;
+    margin: 10px auto;
     justify-content: center;
 }
 
@@ -27,6 +27,6 @@
 #about > img {
 
     width: 200px;
-    margin: 100px auto 20px auto;
+    margin: 30px auto 20px auto;
 
 }

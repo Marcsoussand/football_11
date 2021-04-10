@@ -16,6 +16,8 @@ const About = () => {
         <br/>
         <h4>Your Team : </h4>
         <p>You may also use this website for your own team, update and store your players into our online database.</p>
+        <h4>Coming soon : </h4>
+        <p>- Drag and drop for players, on field and from the bench<br/>- More functionalities for your team (jersey color, logo, bench)</p>
         <img src={logo} alt='Logo'></img>
         </div>
     )

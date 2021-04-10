@@ -508,6 +508,7 @@ class App extends React.Component {
         <div id='noCors' className={corsModule}>
           <div className="popup">
             <div className="close" onClick={this.closeModal}>×</div>
+            <h2>Warning</h2>
             <div className="content-1">In order to get data from FPL without installing extension,<br/>
              you will have to ask for temporary access by visiting this website :<br/>
              <a id='corsLink'href="https://cors-anywhere.herokuapp.com/corsdemo">NO CORS</a> <br/>
