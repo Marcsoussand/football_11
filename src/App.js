@@ -91,12 +91,48 @@ class App extends React.Component {
 
 
   // Fetching all the players data from official FPL API
-  async componentDidMount() {
-    
-  await fetch('https://thingproxy.freeboard.io/fetch/https://fantasy.premierleague.com/api/bootstrap-static/')
+  componentDidMount() {
+    // {
+    //   var cors_api_host = 'cors-anywhere.herokuapp.com';
+    //   var cors_api_url = 'https://' + cors_api_host + '/';
+    //   var slice = [].slice;
+    //   var origin = window.location.protocol + '//' + window.location.host;
+    //   var open = XMLHttpRequest.prototype.open;
+    //   XMLHttpRequest.prototype.open = function() {
+    //       var args = slice.call(arguments);
+    //       var targetOrigin = /^https?:\/\/([^\/]+)/i.exec(args[1]);
+    //       if (targetOrigin && targetOrigin[0].toLowerCase() !== origin &&
+    //           targetOrigin[1] !== cors_api_host) {
+    //           args[1] = cors_api_url + args[1];
+    //       }
+    //       return open.apply(this, args);
+    //   };
+  // }
+  // fetch('https://cors-anywhere.herokuapp.com/https://fantasy.premierleague.com/api/bootstrap-static/')
+  // await fetch('https://thingproxy.freeboard.io/fetch/https://fantasy.premierleague.com/api/bootstrap-static/')
+  fetch('https://fantasy.premierleague.com/api/bootstrap-static/')
+  
    .then(response => response.json())
  .then(playerData => this.setState({ data: playerData }))
    }
+// fetch('https://fantasy.premierleague.com/api/bootstrap-static/',{
+//   method:"GET",
+//   mode: "cors", // no-cors, *cors, same-origin
+//   headers:{
+//     "Access-Control-Allow-Origin": "*",
+//     'Access-Control-Allow-Headers': "*",
+//     "Access-Control-Allow-Methods": "GET, PUT, PATCH, POST, DELETE")
+//   }
+// })
+//   .then(response => response.json())
+//   .then(playerData => {
+//     console.log(playerData);
+//     this.setState({ data: playerData })
+//   })
+
+
+
+// }
 
 
 
@@ -474,7 +510,7 @@ class App extends React.Component {
 
   render() {
 
-    const { displayFormation, jerseyColor, playersName, benchName, team, badge, token, visibilityStatus, buttonColor, availableText, modalClasses, corsModule } = this.state;
+    const { displayFormation, jerseyColor, playersName, benchName, team, badge, token, visibilityStatus, buttonColor, availableText, modalClasses} = this.state; //corsModule } = this.state;
 
     // <UseToken/>
     if (!token) {

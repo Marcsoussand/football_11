@@ -1,16 +1,11 @@
 import React from 'react';
 
+// Display selector, which tactic do you want to use
+// Used for both pages realTeams and yourTeam
+
 const SelectDisplay = (props) =>{
 
     let {formation, changeDisplay} = props;
-
-    
-    
-    
-
-    // console.log("First :",{color,team});  
-
-    
 
 return (
     <>

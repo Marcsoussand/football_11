@@ -1,5 +1,8 @@
 
 
+// 11 Players who are displayed on Field
+// Data coming from playersName, component used for both pages realTeams and yourTeam
+
 const PlayersOnField = (props) => {
 
     let { playersName, visibilityStatus } = props;

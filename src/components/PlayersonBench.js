@@ -1,5 +1,7 @@
 
 
+// Bench : List of all players on squad which are not on Field, 
+
 const PlayersOnBench = (props) => {
 
     let {benchName,visibilityStatus} = props;

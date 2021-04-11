@@ -30,19 +30,6 @@ return (
         <span className='navItems' id='welcome'>Hi {JSON.parse(token).username}</span>
         </div>
     </nav>)}
-// return(
-//     <nav>
-//     <div id='title'> <img src={logo} alt='Logo'></img><div><p style={{color:'gold'}}>Football 11</p><p style={{fontSize:"60%", textAlign:'center'}}>Lineup builder</p></div></div>
-//     <div id='items'>
-//     <span className='navItems' onClick={realTeams} ><NavLink to ='/realTeams'>Real Teams</NavLink></span>
-//     <span className='navItems' onClick={yourTeam}><NavLink to='/yourTeam'>Your Team</NavLink> </span>
-//     <span className='navItems' onClick={about}><NavLink to='/about'>About</NavLink></span>
-//     <span className='navItems'>Welcome {JSON.parse(token).username}</span>
-//     </div>
-// </nav>
 
-// )
-
-// }
 
 export default Navbar;
