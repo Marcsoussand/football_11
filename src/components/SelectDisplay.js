@@ -5,12 +5,12 @@ import React from 'react';
 
 const SelectDisplay = (props) => {
 
-    let { formation, changeDisplay } = props;
+    let { display, formation, changeDisplay } = props;
 
     return (
         <>
             <label htmlFor="myDisplay">Change formation : </label>
-            <select id='myDisplay' className="selector" onChange={changeDisplay}>
+            <select id='myDisplay' className="selector" defaultValue={display} onChange={changeDisplay}>
                 {formation.map((item, i) => {
 
                     return <option id={item} key={i} value={item} >{item}</option>

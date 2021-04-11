@@ -103,7 +103,7 @@ font-size: 80%;
 }
 
 #rightSide {
-  padding-top: 135px;
+  /* padding-top: 135px; */
   font-size: 150%;
   font-weight: bold;
   color: gold;
@@ -111,12 +111,12 @@ font-size: 80%;
 }
 
 
-/* #noCorsTeam {
+#noCorsTeam {
   color:white;
   padding: 50px;
   text-align: center;
   font-size: 70%;
-} */
+}
 
 #bench {
   column-count: 2;

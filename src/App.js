@@ -83,7 +83,7 @@ class App extends React.Component {
       availableText: "Exclude injured and suspended players", //Text of this button
       modalClasses: "overlay", // Pop Up for teams with less forwards available than requested on field
       token: false, //token with username and password
-      // corsModule: "overlay show",
+      corsModule: "overlay show",
 
     }
   }
@@ -108,9 +108,9 @@ class App extends React.Component {
     //       return open.apply(this, args);
     //   };
   // }
-  // fetch('https://cors-anywhere.herokuapp.com/https://fantasy.premierleague.com/api/bootstrap-static/')
+  fetch('https://cors-anywhere.herokuapp.com/https://fantasy.premierleague.com/api/bootstrap-static/')
   // await fetch('https://thingproxy.freeboard.io/fetch/https://fantasy.premierleague.com/api/bootstrap-static/')
-  fetch('https://fantasy.premierleague.com/api/bootstrap-static/')
+  // fetch('https://fantasy.premierleague.com/api/bootstrap-static/')
   
    .then(response => response.json())
  .then(playerData => this.setState({ data: playerData }))
@@ -510,13 +510,13 @@ class App extends React.Component {
 
   render() {
 
-    const { displayFormation, jerseyColor, playersName, benchName, team, badge, token, visibilityStatus, buttonColor, availableText, modalClasses} = this.state; //corsModule } = this.state;
+    const { display, displayFormation, jerseyColor, playersName, benchName, team, badge, token, visibilityStatus, buttonColor, availableText, modalClasses, corsModule } = this.state;//} = this.state;
 
     // <UseToken/>
     if (!token) {
       return <>
         <Navbar realTeams={this.realTeams} yourTeam={this.yourTeam} about={this.about} login={this.login} token={token} />
-        {/* <div id='noCors' className={corsModule}>
+        <div id='noCors' className={corsModule}>
           <div className="popup">
             <div className="close" onClick={this.closeModal}>×</div>
             <h2>Warning</h2>
@@ -526,7 +526,7 @@ class App extends React.Component {
              and refresh the page, sorry for the inconvenience
           </div>
           </div>
-        </div> */}
+        </div>
         <Login setToken={this.setToken} />
 
         <Home token={token} />
@@ -551,9 +551,9 @@ class App extends React.Component {
               <div id='container'>
                 <Modal modalClasses={modalClasses} closeModal={this.closeModal} />
                 <div id='leftSide'>
-                  <SelectTeam listTeams={listTeams} setTeam={this.setTeam} disabled={this.state.data.elements ? false : true} />
+                  <SelectTeam listTeams={listTeams}  setTeam={this.setTeam} disabled={this.state.data.elements ? false : true} />
                   <br />
-                  <SelectDisplay formation={formation} changeDisplay={this.changeDisplay} />
+                  <SelectDisplay formation={formation} display={display} changeDisplay={this.changeDisplay} />
                   <button type="button" id='available' style={{ visibility: visibilityStatus, backgroundColor: buttonColor }} onClick={this.availablePlayers}>{availableText}</button>
                   <PlayersOnField visibilityStatus={visibilityStatus} playersName={playersName} team={team} />
                 </div>
@@ -573,7 +573,7 @@ class App extends React.Component {
                   <img id='badgeDisplay' src={badge} alt='badge'></img>
                 </div>
                 <div id='rightSide'>
-                  {/* <div id='noCorsTeam'>In order to get data from FPL, you will have to ask for temporary access <a href="https://cors-anywhere.herokuapp.com/corsdemo">Here</a></div> */}
+                  <div id='noCorsTeam'>In order to get data from FPL, you will have to ask for temporary access <a href="https://cors-anywhere.herokuapp.com/corsdemo">Here</a></div>
                   <PlayersOnBench visibilityStatus={visibilityStatus} id='playersOnBench1' benchName={benchName} />
                 </div>
               </div>
@@ -586,7 +586,7 @@ class App extends React.Component {
 
               <div id='container'>
                 <div id='leftSide'>
-                  <SelectDisplay formation={formation} changeDisplay={this.changeDisplay} />
+                  <SelectDisplay formation={formation} display={display} changeDisplay={this.changeDisplay} />
                   <YourTeam visibilityStatus={visibilityStatus} playersName={playersName} team={team} setPlayerNames={this.setPlayerNames} showPlayers={this.showPlayers} />
                 </div>
                 <div id='field'>
