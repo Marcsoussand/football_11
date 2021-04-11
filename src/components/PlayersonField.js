@@ -10,7 +10,7 @@ const PlayersOnField = (props) => {
     return (
         <>
 
-            <ul id='playersOnField1' style={{visibility:visibilityStatus}}>
+            <ul id='playersOnField1' style={{ visibility: visibilityStatus }}>
                 <p id='playersTitle'>Players </p>
                 {playersName.map((item, i) => {
                     switch (item[1]) {

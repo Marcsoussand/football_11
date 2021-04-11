@@ -4,10 +4,8 @@ class YourTeam extends React.Component {
     constructor(props) {
         super(props);
         this.setPlayer = this.setPlayer.bind(this);
-        // this.editPlayers = this.editPlayers.bind(this);
     };
 
-    
     async componentDidMount() {
         await fetch('http://localhost:8081/show')
             .then(res => res.json())
@@ -15,7 +13,6 @@ class YourTeam extends React.Component {
                 this.props.showPlayers(data)
             })
     }
-
 
     setPlayer(playersTemp2) {
         this.props.setPlayerNames(playersTemp2);
@@ -29,7 +26,7 @@ class YourTeam extends React.Component {
 
         return (
             <>
-                
+
                 <ul style={{ visibility: 'visible' }} id='playersOnField1'>
                     <h3 style={{ textAlign: "center", color: "gold" }} >Edit Players </h3>
                     {playersName.map((item, i) => {

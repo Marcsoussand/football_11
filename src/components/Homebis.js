@@ -10,7 +10,7 @@ const Homebis = () => {
                 <li><i className="fas fa-check-circle"></i>Multiple Tactics</li>
                 <li><i className="fas fa-check-circle"></i>Official Logos and Color</li>
                 <li><i className="fas fa-check-circle"></i>Option to exclude Injured and Suspended</li>
-                
+
             </ul>
             <ul>
                 <li><i className="fas fa-check-circle"></i>Create your own Team</li>

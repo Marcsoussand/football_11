@@ -8,41 +8,41 @@ import { Route } from 'react-router-dom'
 
 
 export default function Login({ setToken }) {
-    const [username, setUserName] = useState();
-     const [password, setPassword] = useState();
-   
-     const handleSubmit = async e => {
-       e.preventDefault();
-        const token =({
-         username,
-         password
-       });
-       localStorage.setItem('token', JSON.stringify(token));
-       setToken(token);
-     }
+  const [username, setUserName] = useState();
+  const [password, setPassword] = useState();
 
-     
-    return (
-        <>
-        <div id='loginContainer'>
+  const handleSubmit = async e => {
+    e.preventDefault();
+    const token = ({
+      username,
+      password
+    });
+    localStorage.setItem('token', JSON.stringify(token));
+    setToken(token);
+  }
+
+
+  return (
+    <>
+      <div id='loginContainer'>
         <h2>Please enter your login</h2>
         <form id='loginForm' onSubmit={handleSubmit}>
-      <label>
-        <p>Username</p>
-        <input type="text" className='inputLogin' onChange={e => setUserName(e.target.value)} />
-      </label>
-      <label>
-        <p>Password</p>
-        <input type="password" className='inputLogin' onChange={e => setPassword(e.target.value)}/>
-      </label>
-      <div>
-      {/* <NavLink to='/realTeams'><button type="submit" className='loginButton'>Submit</button></NavLink> */}
-      {/* <button type="submit" className='loginButton'>Submit</button> */}
-      <Route render={({history}) => (<button type="submit" className='loginButton' onClick={() => { history.push('/') }}>Submit</button> )} />
+          <label>
+            <p>Username</p>
+            <input type="text" className='inputLogin' onChange={e => setUserName(e.target.value)} />
+          </label>
+          <label>
+            <p>Password</p>
+            <input type="password" className='inputLogin' onChange={e => setPassword(e.target.value)} />
+          </label>
+          <div>
+            {/* <NavLink to='/realTeams'><button type="submit" className='loginButton'>Submit</button></NavLink> */}
+            {/* <button type="submit" className='loginButton'>Submit</button> */}
+            <Route render={({ history }) => (<button type="submit" className='loginButton' onClick={() => { history.push('/') }}>Submit</button>)} />
+          </div>
+        </form>
       </div>
-    </form>
-    </div>
-     {/* <div id='loginContainer'>
+      {/* <div id='loginContainer'>
      <h2>To register for the first time</h2>
      <form id='registerForm'>
      <label>
@@ -70,11 +70,11 @@ export default function Login({ setToken }) {
    </div>
  </form>
  </div> */}
- </>
+    </>
 
-    )
+  )
 }
 
 Login.propTypes = {
-    setToken: PropTypes.func.isRequired
-  };
+  setToken: PropTypes.func.isRequired
+};
